@@ -20,7 +20,10 @@ public class RoomPopulater : MonoBehaviour
         yMin = min.position.y;
         yMax = max.position.y;
 
+        //////////////////////////////////////Hard coded object count over here
         int numObjects = 3;
+
+
         switches = new List<Platform>();
 
         //PushableTypes[] types = Pushable.GetUniqueTypes(numObjects);
@@ -46,7 +49,7 @@ public class RoomPopulater : MonoBehaviour
                 platformPref,
                 new Vector3(
                     Random.Range(xMin, xMax),
-                    Random.Range(yMin, yMax),
+                    Random.Range(yMin, yMax) + 1,
                     0
                 ),
                 Quaternion.identity
@@ -73,6 +76,9 @@ public class RoomPopulater : MonoBehaviour
             roomCleared = true;
             Destroy(door);
 
+            FindObjectOfType<PlayerManager>().timerPaused = true;
+
+            FindObjectOfType<RoomManager>().GenRoom();
         }
     }
 }

@@ -16,13 +16,14 @@ public class PlayerManager : MonoBehaviour
     public float maxTime; public float timeLeft;
 
     [Space(10)]
-    public bool hasKey = true;
+    GameObject keyInst;
+    public bool HasKey { get; private set; }
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteForm = GetComponentsInChildren<Transform>()[1]; //Since the first willl always be the self;
-        maxTime = timeLeft = 20;
+        maxTime = timeLeft = 40;
     }
 
 
@@ -76,5 +77,31 @@ public class PlayerManager : MonoBehaviour
         }
 
         rb.velocity = movement * speed;
+    }
+
+    public void GiveKey(GameObject key)
+    {
+        HasKey = true;
+        keyInst = key;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Chest" && HasKey)
+        {
+            print("nepO emaseS");
+            Destroy(keyInst);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        print("Triggger enter");
+        if (collision.tag == "Player detector")
+        {
+            timeLeft = maxTime;
+            timerPaused = false;
+            Destroy(collision);
+        }
     }
 }
