@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class timebar : MonoBehaviour
+public class Timebar : MonoBehaviour
 {
 
     public float totalTime;
@@ -26,7 +26,7 @@ public class timebar : MonoBehaviour
           gameObject.GetComponent<RectTransform>().localScale = new Vector3(0f,1f,1f);
           return;
         };
-        currentTime -= speed;
+        currentTime -= Time.deltaTime;
         gameObject.GetComponent<RectTransform>().localScale = new Vector3(currentTime/totalTime,1f,1f);
     }
 

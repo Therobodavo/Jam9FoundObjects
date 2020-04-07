@@ -4,9 +4,11 @@ using UnityEngine;
 
 public enum PushableTypes
 {
-    DirtBlock,
-    DoorTallClosed,
     Rock,
+    Heart,
+    TreeTall,
+    TreeShort,
+    TreeUgly
 };
 public class Pushable : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class Pushable : MonoBehaviour
 
     public PushableTypes type;
 
-    public string typeString;
+    string typeString;
 
     string Stringify(PushableTypes enumValue)
     {
@@ -40,7 +42,7 @@ public class Pushable : MonoBehaviour
     {
         typeString = Stringify(type);
         sr = GetComponentInChildren<SpriteRenderer>();
-        print(sr.sprite = Resources.Load<Sprite>(typeString));
+        sr.sprite = Resources.Load<Sprite>("PlanetCute/" + typeString);
     }
 
 }

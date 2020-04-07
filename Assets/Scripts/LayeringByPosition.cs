@@ -5,12 +5,10 @@ using UnityEngine;
 public class LayeringByPosition : MonoBehaviour
 {
     Vector3 offset;
-    public Transform spriteForm;
-
-    public Transform[] d;
+    Transform spriteForm;
     private void Start()
     {
-        spriteForm = (d=GetComponentsInChildren<Transform>())[1]; //Since the first willl always be the self.
+        spriteForm = GetComponentsInChildren<Transform>()[1]; //Since the first willl always be the self.
     }
     // Update is called once per frame
     void Update()
