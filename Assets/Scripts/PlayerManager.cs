@@ -12,9 +12,10 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("Use Timer Paused to pause the timer while alllowing movement")]
     public bool timerPaused;
 
-    [Header("These are hard set in Start(). You can change at runtime without isssue, however.")]
-    public float maxTime, timeLeft;
+    [Header("These are hard set in Start() but safe to change at runtime.")]
+    public float maxTime; public float timeLeft;
 
+    [Space(10)]
     public bool hasKey = true;
 
     void Start()

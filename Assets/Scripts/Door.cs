@@ -7,7 +7,7 @@ public class Door : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //Destroy(gameObject);
     }
 
     // Update is called once per frame
@@ -16,12 +16,8 @@ public class Door : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Open()
     {
-        if(collision.gameObject.name == "Player" && collision.gameObject.GetComponent<PlayerManager>().hasKey)
-        {
-            Destroy(gameObject);
-            GameObject.FindObjectOfType<RoomManager>().GenRoom();
-        }
+        
     }
 }

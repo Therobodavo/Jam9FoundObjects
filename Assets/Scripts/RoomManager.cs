@@ -12,14 +12,8 @@ public class RoomManager : MonoBehaviour
     void Start()
     {
         lastRoom = startRoom;
+        lastRoom = Instantiate(startRoom, transform.position, Quaternion.identity);
         GenRoom();
-        GenRoom();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void GenRoom()
@@ -27,5 +21,6 @@ public class RoomManager : MonoBehaviour
         Vector3 newRoomPos = lastRoom.transform.position;
         newRoomPos.y += 11.32f;
         lastRoom = Instantiate(roomPrefab, newRoomPos, Quaternion.identity);
+        
     }
 }

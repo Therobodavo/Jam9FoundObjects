@@ -1,18 +1,63 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum PushableTypes
 {
     Rock,
-    Heart,
+    Star,
     TreeTall,
     TreeShort,
-    TreeUgly
+    TreeUgly,
+    WindowTall
 };
 public class Pushable : MonoBehaviour
 {
-    
+    static int typeCount = System.Enum.GetNames(typeof(PushableTypes)).Length;
+
+    /// <summary>
+    /// I don't know why I wrote this.
+    /// </summary>
+    /// <param name="count">How many pushable types do you want?</param>
+    /// <returns>An arrray of distinct PushableTypes</returns>
+    public static PushableTypes[] GetUniqueTypes(int count)
+    {
+        if (count > typeCount)
+        {
+            throw new System.ArgumentOutOfRangeException(string.Format("{0} is outside the range 0—{1}. ({0} was the argument given.)", count, typeCount));
+        }
+        List<int> indices = new List<int>();
+
+        for (int i = 0; i < count; i++)
+        {
+            int next = Random.Range(0, typeCount - i);
+
+            while (indices.Contains(next)) next++;
+            print(next);
+
+            indices.Add(next);
+        }
+
+
+        PushableTypes[] result = new PushableTypes[count];
+
+        for (int i = 0; i < count; i++)
+        {
+            result[i] = (PushableTypes)indices[i];
+        }
+        
+        return result;
+    }
+
+    public static PushableTypes GetRandomType()
+    {
+        return (PushableTypes)Random.Range(0, typeCount);
+    }
+
+
+
+
 
     public PushableTypes type;
 

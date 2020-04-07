@@ -18,9 +18,9 @@ public class LayeringByPosition : MonoBehaviour
         spriteForm.localPosition = offset;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (gameObject.layer == LayerMask.NameToLayer("Mobilia") && collision.gameObject.layer == LayerMask.NameToLayer("Levantes"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Levantes"))
         {
             offset.y = 0.2f;
             print(name + " going up!");
@@ -29,7 +29,7 @@ public class LayeringByPosition : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (gameObject.layer == LayerMask.NameToLayer("Mobilia") && collision.gameObject.layer == LayerMask.NameToLayer("Levantes"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Levantes"))
         {
             print(name + " going down!");
             offset.y = 0;
