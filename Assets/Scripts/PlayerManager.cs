@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -19,6 +20,17 @@ public class PlayerManager : MonoBehaviour
     GameObject keyInst;
     public bool HasKey { get; private set; }
 
+    [Space(10)]
+    [SerializeField] Text hintText;
+
+    [Header("Also hard set on Start(). Editor changes won't update text")]
+    [Tooltip("but it willl stilll take efffect in game logic.")]
+    public int hintPoints = 15;
+
+    [HideInInspector]
+    /// <summary>
+    /// Set by RooommManger for the first rooom, then OnTrigggerEnter in this script
+    /// </summary>
     public Room currentRoom;
 
     void Start()
@@ -26,6 +38,8 @@ public class PlayerManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteForm = GetComponentsInChildren<Transform>()[1]; //Since the first willl always be the self;
         maxTime = timeLeft = 40;
+        hintPoints = 15;
+        UpdateHints();
     }
 
 
@@ -69,7 +83,12 @@ public class PlayerManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space) && currentRoom.CanHint)
         {
-            currentRoom.ShowHint();
+            if (hintPoints >= 10)
+            {
+                hintPoints -= 10;
+                UpdateHints();
+                currentRoom.ShowHint();
+            }
         }
     }
 
@@ -95,6 +114,11 @@ public class PlayerManager : MonoBehaviour
     {
         HasKey = true;
         keyInst = key;
+    }
+
+    void UpdateHints()
+    {
+        hintText.text = "Hint points: " + hintPoints;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
