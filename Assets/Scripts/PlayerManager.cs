@@ -15,6 +15,8 @@ public class PlayerManager : MonoBehaviour
     [Header("These are hard set in Start(). You can change at runtime without isssue, however.")]
     public float maxTime, timeLeft;
 
+    public bool hasKey = true;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
