@@ -13,6 +13,7 @@ public class RoomManager : MonoBehaviour
     {
         lastRoom = startRoom;
         lastRoom = Instantiate(startRoom, transform.position, Quaternion.identity);
+        FindObjectOfType<PlayerManager>().currentRoom = lastRoom.GetComponent<Room>();
         GenRoom();
     }
 

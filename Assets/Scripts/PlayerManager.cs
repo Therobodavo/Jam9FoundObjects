@@ -19,6 +19,8 @@ public class PlayerManager : MonoBehaviour
     GameObject keyInst;
     public bool HasKey { get; private set; }
 
+    public Room currentRoom;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -32,26 +34,10 @@ public class PlayerManager : MonoBehaviour
     {
         if (paused) return;
         Move();
+        CheckInputForHint();
 
         if (timerPaused) return;
         UpdateTimer();
-    }
-
-    void UpdateTimer()
-    {
-        timeLeft -= Time.deltaTime;
-        if (timeLeft < 0) GameOver();
-        else
-        {
-            timeBar.localScale = new Vector3(timeLeft / maxTime, 1, 1);
-        }
-    }
-
-    void GameOver()
-    {
-        print("aaaaah");
-        timerPaused = true;
-        timeBar.localScale = Vector3.zero;
     }
 
     void Move()
@@ -79,6 +65,32 @@ public class PlayerManager : MonoBehaviour
         rb.velocity = movement * speed;
     }
 
+    void CheckInputForHint()
+    {
+        if(Input.GetKeyDown(KeyCode.Space) && currentRoom.CanHint)
+        {
+            currentRoom.ShowHint();
+        }
+    }
+
+    void UpdateTimer()
+    {
+        timeLeft -= Time.deltaTime;
+        if (timeLeft < 0) GameOver();
+        else
+        {
+            timeBar.localScale = new Vector3(timeLeft / maxTime, 1, 1);
+        }
+    }
+
+    void GameOver()
+    {
+        print("aaaaah");
+        timerPaused = true;
+        timeBar.localScale = Vector3.zero;
+    }
+
+
     public void GiveKey(GameObject key)
     {
         HasKey = true;
@@ -94,14 +106,15 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         print("Triggger enter");
-        if (collision.tag == "Player detector")
+        if (other.tag == "Player detector")
         {
             timeLeft = maxTime;
+            currentRoom = other.gameObject.transform.parent.GetComponent<Room>();
             timerPaused = false;
-            Destroy(collision);
+            Destroy(other);
         }
     }
 }
