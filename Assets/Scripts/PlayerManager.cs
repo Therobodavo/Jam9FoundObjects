@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    float currentRotation = 0;
     public int speed = 2;
-
+    Rigidbody2D rb;
+    public Transform spriteForm;
+    public Transform[] d;
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+        spriteForm = (d=GetComponentsInChildren<Transform>())[1]; //Since the first willl always be the self;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -19,24 +21,23 @@ public class PlayerManager : MonoBehaviour
         float sideMovement = Input.GetAxis("Horizontal");
         float vertMovement = Input.GetAxis("Vertical");
 
-        if (vertMovement > 0)
+        Vector3 movement = Vector3.ClampMagnitude(new Vector3(sideMovement, vertMovement), 1);
+
+        if (movement.sqrMagnitude > 0.01f)
         {
-            currentRotation = 90;
+            //Rotate
+            float angle = Mathf.Atan2(vertMovement, sideMovement) * Mathf.Rad2Deg;
+            if (angle > 90 || angle < -90)
+            {
+                spriteForm.localScale = new Vector3(1, -1, 1);
+            }
+            else
+            {
+                spriteForm.localScale = Vector3.one;
+            }
+            spriteForm.rotation = Quaternion.Euler(0, 0, angle);
         }
-        else if (vertMovement < 0)
-        {
-            currentRotation = 270;
-        }
-        else if (sideMovement > 0)
-        {
-            currentRotation = 0;
-        }
-        else if (sideMovement < 0) 
-        {
-            currentRotation = 180;
-        }
-        this.gameObject.transform.rotation = Quaternion.identity;
-        this.gameObject.transform.Rotate(0, 0, currentRotation);
-        this.gameObject.transform.position += new Vector3(sideMovement, vertMovement, 0) * Time.deltaTime * speed;
+
+        rb.velocity = movement * speed;
     }
 }
