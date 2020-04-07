@@ -13398,8 +13398,14 @@ MonoBehaviour:
   pushablePref: {fileID: 3961234741925610592, guid: aa1f457b242565845aec3d215d072c39,
     type: 3}
   door: {fileID: 6706770559644409546}
+  chestPref: {fileID: 1674315880025890223, guid: 738fb5fc0a349174f89f4b22700c88ff,
+    type: 3}
+  keyPlatformPref: {fileID: 4906709672997468522, guid: ea60dcd7c5869624b8ec82a1ff7f2a17,
+    type: 3}
   min: {fileID: 6189125767383546151}
   max: {fileID: 5059981120524967118}
+  chestSpawnChance: 3
+  numObjects: 3
 --- !u!1 &6706770560184263269
 GameObject:
   m_ObjectHideFlags: 0

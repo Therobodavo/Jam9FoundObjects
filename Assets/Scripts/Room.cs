@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField] GameObject platformPref, pushablePref, door;
+    [SerializeField] GameObject platformPref, pushablePref, door, chestPref, keyPlatformPref;
     [SerializeField] Transform min, max;
 
     float xMin, xMax, yMin, yMax;
@@ -14,10 +14,13 @@ public class Room : MonoBehaviour
     List<Platform> switches;
     List<Pushable> boxes;
 
+    [SerializeField] [Tooltip("Spawn chance is one in whatever number you enter")] int chestSpawnChance;
 
     int hinted = 0;
 
     public bool CanHint { get { return hinted < switches.Count; } }
+
+    [SerializeField] int numObjects;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +30,6 @@ public class Room : MonoBehaviour
         yMin = min.position.y;
         yMax = max.position.y;
 
-        //////////////////////////////////////Hard coded object count over here
-        int numObjects = 3;
 
 
         switches = new List<Platform>();
@@ -71,6 +72,51 @@ public class Room : MonoBehaviour
 
             plat.target = type;
             switches.Add(plat);
+        }
+
+        if(Random.Range(0, chestSpawnChance) == 0)
+        {
+            //Spawn a looot chest
+
+            PushableTypes type = Pushable.GetRandomType();
+
+            Pushable box =
+            Instantiate(
+                pushablePref,
+                new Vector3(
+                    Random.Range(xMin, xMax),
+                    Random.Range(yMin, yMax),
+                    0
+                ),
+                Quaternion.identity,
+                transform
+            ).GetComponent<Pushable>();
+
+            box.type = type;
+
+
+
+            Instantiate(
+                keyPlatformPref,
+                new Vector3(
+                    Random.Range(xMin, xMax),
+                    Random.Range(yMin, yMax) + 1,
+                    0
+                ),
+                Quaternion.identity,
+                transform
+            ).GetComponent<KeyPlatform>().target = type;
+
+            Instantiate(
+                chestPref,
+                new Vector3(
+                    Random.Range(xMin, xMax),
+                    Random.Range(yMin, yMax),
+                    0
+                ),
+                Quaternion.identity,
+                transform
+            );
         }
     }
 

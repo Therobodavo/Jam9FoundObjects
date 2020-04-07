@@ -13,10 +13,10 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("Use Timer Paused to pause the timer while alllowing movement")]
     public bool timerPaused;
 
-    [Header("These are hard set in Start() but safe to change at runtime.")]
     public float maxTime; public float timeLeft;
 
     [Space(10)]
+    [SerializeField] Chesterface ChestUI;
     GameObject keyInst;
     public bool HasKey { get; private set; }
 
@@ -37,7 +37,6 @@ public class PlayerManager : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteForm = GetComponentsInChildren<Transform>()[1]; //Since the first willl always be the self;
-        maxTime = timeLeft = 40;
         hintPoints = 15;
         UpdateHints();
     }
@@ -116,23 +115,28 @@ public class PlayerManager : MonoBehaviour
         keyInst = key;
     }
 
-    void UpdateHints()
+    public void UpdateHints()
     {
         hintText.text = "Hint points: " + hintPoints;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Chest" && HasKey)
+        Chest c;
+        if ((c = collision.gameObject.GetComponent<Chest>()) && HasKey)
         {
-            print("nepO emaseS");
+            paused = true;
+            rb.velocity = Vector2.zero;
+            c.opened = true;
+            ChestUI.Open(c, c.gem);
             Destroy(keyInst);
+            HasKey = false;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        print("Triggger enter");
+        //print("Triggger enter");
         if (other.tag == "Player detector")
         {
             timeLeft = maxTime;
