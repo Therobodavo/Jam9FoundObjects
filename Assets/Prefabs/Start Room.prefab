@@ -13122,7 +13122,7 @@ MonoBehaviour:
     type: 3}
   min: {fileID: 6189125767383546151}
   max: {fileID: 5059981120524967118}
-  chestSpawnChance: 10
+  chestSpawnChance: 1
   numObjects: 2
 --- !u!1 &6706770560184263269
 GameObject:

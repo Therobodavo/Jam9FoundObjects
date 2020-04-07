@@ -151,7 +151,7 @@ public class Room : MonoBehaviour
         push = boxes[hinted].GetComponentInChildren<SpriteRenderer>();
         plat = switches[hinted].GetComponentInChildren<SpriteRenderer>();
 
-        Color c = Color.HSVToRGB(Random.Range(0f, 1), 0.5f, 1);
+        Color c = Color.HSVToRGB(Random.Range(0f, 1), 0.8f, 1);
 
         push.color = plat.color = c;
 

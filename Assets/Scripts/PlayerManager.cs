@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class PlayerManager : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteForm = GetComponentsInChildren<Transform>()[1]; //Since the first willl always be the self;
+        timeLeft = maxTime;
         hintPoints = 15;
         UpdateHints();
     }
@@ -103,9 +105,7 @@ public class PlayerManager : MonoBehaviour
 
     void GameOver()
     {
-        print("aaaaah");
-        timerPaused = true;
-        timeBar.localScale = Vector3.zero;
+        SceneManager.LoadScene("End");
     }
 
 
