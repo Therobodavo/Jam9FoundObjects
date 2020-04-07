@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     float currentRotation = 0;
     public int speed = 2;
+    public bool hasKey = true;
 
     void Start()
     {
